@@ -3,10 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import { useSocket } from "../hooks/useSocket";
 import { clearSession } from "../lib/storage";
 import { Copy, Menu, X } from "lucide-react";
+import { toast } from "sonner";
+import { getSession, saveSession } from "../lib/storage";
 
 export default function Chat() {
   const typingTimeout = useRef<any>(null);
+
   const { state } = useLocation();
+  const session = state || getSession();
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
@@ -17,12 +21,19 @@ export default function Chat() {
   const [pendingNavigation, setPendingNavigation] = useState(false);
 
   useEffect(() => {
-    if (!state) navigate("/");
-  }, [state, navigate]);
+    if (state) {
+      saveSession(state);
+    }
+  }, [state]);
 
-  if (!state) return null;
+  useEffect(() => {
+    if (!session) {
+      navigate("/");
+    }
+  }, [session, navigate]);
 
-  const { roomId, password, username } = state;
+  if (!session) return null;
+  const { roomId, password, username } = session;
 
   const { messages, users, sendMessage, sendTyping, typingUsers } = useSocket({
     roomId,
@@ -108,6 +119,7 @@ export default function Chat() {
                   className="cursor-pointer hover:text-green-300"
                   onClick={() => {
                     navigator.clipboard.writeText(roomId);
+                    toast.success('Room ID Copied successfully')
                   }}
                 />
               </div>
@@ -123,6 +135,7 @@ export default function Chat() {
                   className="cursor-pointer hover:text-green-300"
                   onClick={() => {
                     navigator.clipboard.writeText(password);
+                    toast.success('Password Copied successfully')
                   }}
                 />
               </div>
@@ -230,11 +243,10 @@ export default function Chat() {
                   >
                     <div
                       className={`max-w-[70%] min-w-[25%] px-3 py-2 text-sm rounded-lg
-                    ${
-                      isMe
-                        ? "bg-green-500 text-black"
-                        : "bg-[#0f1a12] text-green-300 border border-green-500/20"
-                    }`}
+                    ${isMe
+                          ? "bg-green-500 text-black"
+                          : "bg-[#0f1a12] text-green-300 border border-green-500/20"
+                        }`}
                     >
                       {/* MESSAGE */}
                       <div>{msg.message}</div>
@@ -289,11 +301,10 @@ export default function Chat() {
               disabled={isDisabled}
               onClick={handleSend}
               className={`px-4 border glow-border transition
-    ${
-      isDisabled
-        ? "opacity-40 cursor-not-allowed border-green-500/50 text-green-500/70"
-        : "hover:bg-green-500 hover:text-black cursor-pointer"
-    }
+    ${isDisabled
+                  ? "opacity-40 cursor-not-allowed border-green-500/50 text-green-500/70"
+                  : "hover:bg-green-500 hover:text-black cursor-pointer"
+                }
   `}
             >
               Send
