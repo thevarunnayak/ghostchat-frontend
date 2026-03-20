@@ -6,7 +6,7 @@ const lines = [
   "Establishing secure connection...",
   "Decrypting access keys...",
   "Access granted.",
-  "Welcome to Ghost Chat.",
+  "Welcome to Nex Void.",
 ];
 
 export default function BootScreen({ onDone }: any) {

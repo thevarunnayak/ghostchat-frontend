@@ -160,7 +160,7 @@ export default function Chat() {
             >
               <Menu size={18} />
             </button>
-            <span className="glow text-lg font-semibold">Ghost Chat</span>
+            <span className="glow text-lg font-semibold">Nex Void</span>
             <span className="text-xs opacity-60">
               {new Date().toLocaleDateString(undefined, {
                 weekday: "long",
