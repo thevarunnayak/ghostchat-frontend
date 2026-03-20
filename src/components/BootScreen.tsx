@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const lines = [
+const homeLines = [
   "Initializing system...",
   "Loading kernel modules...",
   "Establishing secure connection...",
@@ -9,7 +10,19 @@ const lines = [
   "Welcome to Neo Void.",
 ];
 
+const chatLines = [
+  "Connecting to node...",
+  "Joining channel...",
+  "Syncing messages...",
+  "Connected.",
+];
+
 export default function BootScreen({ onDone }: any) {
+  const location = useLocation();
+
+  const variant = location.pathname.startsWith("/chat") ? "chat" : "home";
+  const lines = variant === "chat" ? chatLines : homeLines;
+
   const [displayed, setDisplayed] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState("");
   const [lineIndex, setLineIndex] = useState(0);
@@ -27,11 +40,13 @@ export default function BootScreen({ onDone }: any) {
 
     const line = lines[lineIndex];
 
+    const typingSpeed = variant === "chat" ? Math.random() * 90 + 15 : Math.random() * 60 + 20;
+
     if (charIndex < line.length) {
       const timeout = setTimeout(() => {
         setCurrentLine((prev) => prev + line[charIndex]);
         setCharIndex((prev) => prev + 1);
-      }, Math.random() * 40 + 20);
+      }, typingSpeed);
 
       return () => clearTimeout(timeout);
     } else {
@@ -44,7 +59,7 @@ export default function BootScreen({ onDone }: any) {
 
       return () => clearTimeout(timeout);
     }
-  }, [charIndex, lineIndex]);
+  }, [charIndex, lineIndex, lines, variant]);
 
   // 📊 Fake loading bar
   useEffect(() => {
@@ -52,11 +67,12 @@ export default function BootScreen({ onDone }: any) {
 
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const next = prev + Math.random() * 10;
+        const increment = variant === "chat" ? 14 : 10;
+        const next = prev + Math.random() * increment;
 
         if (next >= 100) {
           clearInterval(interval);
-          setTimeout(onDone, 400);
+          setTimeout(onDone, variant === "chat" ? 250 : 400);
           return 100;
         }
 
@@ -65,13 +81,15 @@ export default function BootScreen({ onDone }: any) {
     }, 120);
 
     return () => clearInterval(interval);
-  }, [doneTyping, onDone]);
+  }, [doneTyping, onDone, variant]);
 
   return (
     <div className="fixed inset-0 bg-black text-green-400 z-50 font-mono crt">
       {/* TERMINAL AREA (TOP LEFT, FULLSCREEN) */}
       <div className="p-4 sm:p-6 md:p-8 text-xs sm:text-sm md:text-base leading-relaxed">
-        <div className="mb-2 text-green-500">root@matrix:~#</div>
+        <div className="mb-2 text-green-500">
+          {variant === "chat" ? "node@void:~#" : "root@matrix:~#"}
+        </div>
 
         {displayed.map((line, i) => (
           <div key={i}>{line}</div>
@@ -83,23 +101,23 @@ export default function BootScreen({ onDone }: any) {
             <span className="animate-pulse">▌</span>
           </div>
         )}
-      {/* LOADING BAR (BOTTOM FULL WIDTH) */}
-      {doneTyping && (
-        <div className="mt-4">
-          <div className="h-2 w-full border border-green-500">
-            <div
-              className="h-full bg-green-400 shadow-[0_0_10px_#00ff9f] transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
 
-          <div className="text-xs mt-1 text-right pr-1">
-            {Math.floor(progress)}%
+        {/* LOADING BAR (BOTTOM FULL WIDTH) */}
+        {doneTyping && (
+          <div className="mt-4">
+            <div className="h-2 w-full border border-green-500">
+              <div
+                className="h-full bg-green-400 shadow-[0_0_10px_#00ff9f] transition-all"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+
+            <div className="text-xs mt-1 text-right pr-1">
+              {Math.floor(progress)}%
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
-
 
       {/* SKIP BUTTON (FIXED TO SCREEN) */}
       <button
