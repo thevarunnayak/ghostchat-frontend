@@ -15,7 +15,7 @@ export default function JoinForm({ onJoin }: any) {
     <div>
       <input
         placeholder="Room ID"
-        className="w-full mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
+        className="w-full text-base mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
         value={roomId}
         onChange={(e) => setRoomId(e.target.value)}
       />
@@ -23,14 +23,14 @@ export default function JoinForm({ onJoin }: any) {
       <input
         placeholder="Password"
         type="password"
-        className="w-full mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
+        className="w-full text-base mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
       <input
         placeholder="Username"
-        className="w-full mb-4 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
+        className="w-full text-base mb-4 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />

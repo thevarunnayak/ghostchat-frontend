@@ -275,7 +275,7 @@ export default function Chat() {
           )}
           <div className="p-3 border-t border-green-500/30 flex gap-2">
             <input
-              className="flex-1 p-2 bg-black border border-green-500/30 focus:outline-none"
+              className="flex-1 text-base p-2 bg-black border border-green-500/30 focus:outline-none"
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);

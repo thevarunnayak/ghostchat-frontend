@@ -36,7 +36,7 @@ export default function CreateRoomForm({ onJoin }: any) {
     <div className="mt-4">
       <input
         placeholder="Username"
-        className="w-full mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
+        className="w-full text-base mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
