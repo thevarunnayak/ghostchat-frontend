@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* MATRIX THEME VARIABLES */
+:root {
+  --bg: #000000;
+  --text: #00ff9f;
+  --border: #00ff9f;
+  --muted: #0f172a;
+}
+
+.light {
+  --bg: #ffffff;
+  --text: #111111;
+  --border: #e5e7eb;
+}
+
+/* APPLY GLOBAL STYLES */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: monospace;
+}
+
+/* GLOW EFFECT */
+.glow {
+  text-shadow: 0 0 2px #00ff9d50, 0 0 2px #00ff9f50;
+}
+
+.glow-border {
+  box-shadow: 0 0 2px #00ff9f;
+}
+
+/* CRT SCANLINES */
+.crt::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 159, 0.05) 0px,
+    rgba(0, 255, 159, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* CRT FLICKER */
+.crt {
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.98; }
+  50% { opacity: 1; }
+  100% { opacity: 0.97; }
+}
+
+/* VIGNETTE (screen edges dark) */
+.crt::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+}
