@@ -104,7 +104,7 @@ export default function BootScreen({ onDone }: any) {
       {/* SKIP BUTTON (FIXED TO SCREEN) */}
       <button
         onClick={onDone}
-        className="fixed bottom-4 right-4 text-xs border px-2 py-1 opacity-60 hover:opacity-100 hover:bg-green-500 hover:text-black"
+        className="fixed font-orbitron bottom-4 right-4 text-xs border px-2 py-1 opacity-60 hover:opacity-100 hover:bg-green-500 hover:text-black"
       >
         Skip ▶
       </button>

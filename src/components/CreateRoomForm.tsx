@@ -42,7 +42,7 @@ export default function CreateRoomForm({ onJoin }: any) {
       />
 
       <button
-        className="w-full p-2 border border-green-400 text-green-400 hover:bg-green-500 hover:text-black"
+        className="w-full font-orbitron p-2 border border-green-400 text-green-400 hover:bg-green-500 hover:text-black"
         onClick={handleCreate}
         disabled={loading}
       >

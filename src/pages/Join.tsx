@@ -19,7 +19,7 @@ export default function Join() {
     <div className="h-screen flex flex-col items-center justify-center px-4">
       
       {/* 🔥 TITLE OUTSIDE */}
-      <h1 className="text-3xl md:text-4xl mb-8 glow text-center font-semibold">
+      <h1 className="text-3xl md:text-4xl mb-8 glow text-center font-semibold font-orbitron">
         <EncryptedText text="Neo Void" />
       </h1>
 

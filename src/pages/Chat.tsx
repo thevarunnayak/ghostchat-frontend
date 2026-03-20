@@ -149,7 +149,7 @@ export default function Chat() {
 
             {/* LEAVE */}
             <button
-              className="w-full mt-2 p-1 border text-red-400 border-red-400 hover:bg-red-500 hover:text-black"
+              className="w-full font-orbitron mt-2 p-1 border text-red-400 border-red-400 hover:bg-red-500 hover:text-black"
               onClick={() => setShowLeaveModal(true)}
             >
               Leave Room
@@ -173,7 +173,7 @@ export default function Chat() {
             >
               <Menu size={18} />
             </button>
-            <span className="glow text-lg font-semibold">Neo Void</span>
+            <span className="glow text-lg font-semibold font-orbitron ">Neo Void</span>
             <span className="text-xs opacity-60">
               {new Date().toLocaleDateString(undefined, {
                 weekday: "long",
@@ -300,7 +300,7 @@ export default function Chat() {
             <button
               disabled={isDisabled}
               onClick={handleSend}
-              className={`px-4 border glow-border transition
+              className={`px-4 border glow-border transition font-oribtron 
     ${isDisabled
                   ? "opacity-40 cursor-not-allowed border-green-500/50 text-green-500/70"
                   : "hover:bg-green-500 hover:text-black cursor-pointer"
@@ -323,14 +323,14 @@ export default function Chat() {
 
             <div className="flex justify-center gap-3">
               <button
-                className="px-4 py-1 border border-green-500/30 hover:bg-green-500/20"
+                className="px-4 py-1 border font-orbitron border-green-500/30 hover:bg-green-500/20"
                 onClick={cancelLeave}
               >
                 Cancel
               </button>
 
               <button
-                className="px-4 py-1 border border-red-400 text-red-400 hover:bg-red-500 hover:text-black"
+                className="px-4 py-1 border font-orbitron border-red-400 text-red-400 hover:bg-red-500 hover:text-black"
                 onClick={confirmLeave}
               >
                 Leave

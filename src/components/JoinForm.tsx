@@ -36,7 +36,7 @@ export default function JoinForm({ onJoin }: any) {
       />
 
       <button
-        className="w-full p-2 border glow-border hover:bg-green-500 hover:text-black"
+        className="w-full font-orbitron p-2 border glow-border hover:bg-green-500 hover:text-black"
         onClick={handleJoin}
       >
         Join Room
