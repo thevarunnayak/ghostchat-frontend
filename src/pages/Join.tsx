@@ -20,7 +20,7 @@ export default function Join() {
       
       {/* 🔥 TITLE OUTSIDE */}
       <h1 className="text-3xl md:text-4xl mb-8 glow text-center font-semibold">
-        <EncryptedText text="Nex Void" />
+        <EncryptedText text="Neo Void" />
       </h1>
 
       {/* FORM CARD */}

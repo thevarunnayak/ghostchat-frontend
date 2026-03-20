@@ -6,7 +6,7 @@ const lines = [
   "Establishing secure connection...",
   "Decrypting access keys...",
   "Access granted.",
-  "Welcome to Nex Void.",
+  "Welcome to Neo Void.",
 ];
 
 export default function BootScreen({ onDone }: any) {
