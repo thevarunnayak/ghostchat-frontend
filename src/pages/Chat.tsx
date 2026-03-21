@@ -35,7 +35,7 @@ export default function Chat() {
   if (!session) return null;
   const { roomId, password, username } = session;
 
-  const { messages, users, sendMessage, sendTyping, typingUsers } = useSocket({
+  const { messages, users, sendMessage, sendTyping, typingUsers, isReady, connected } = useSocket({
     roomId,
     password,
     username,
@@ -57,7 +57,7 @@ export default function Chat() {
     setPendingNavigation(false);
   };
 
-  const isDisabled = !input.trim();
+  const isDisabled = !input.trim() || !isReady || !connected;
 
   //handle back
   useEffect(() => {
