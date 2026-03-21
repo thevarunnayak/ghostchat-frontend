@@ -75,6 +75,10 @@ export default function CreateRoomForm({ onJoin }: any) {
       {/* 🔲 Toggle */}
       <GhostToggle value={ghostMode} onChange={setGhostMode} />
 
+        <p className="opacity-60 mt-1 text-green-600 text-[12px]">
+          Messages self-destruct after a short time and leave no trace. No history. No footprints.
+        </p>
+
       {/* ⏱ Timer */}
       {ghostMode && (
         <TimeSelector
