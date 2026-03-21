@@ -1,25 +1,55 @@
 import { useState } from "react";
+import { toast } from "sonner";
+import GhostToggle from "./GhostToggle";
+import TimeSelector from "./TimeSelector";
 
 export default function CreateRoomForm({ onJoin }: any) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [roomData, setRoomData] = useState<any>(null);
 
+  const [ghostMode, setGhostMode] = useState(false);
+  const [duration, setDuration] = useState(1);
+  const [unit, setUnit] = useState("hours");
+
   const handleCreate = async () => {
-    if (!username) return;
+    if (!username) {
+      toast.error("Enter username");
+      return;
+    }
+
+    if (ghostMode && (!duration || duration <= 0)) {
+      toast.error("Enter valid duration");
+      return;
+    }
+
+  const durationMs =
+    unit === "seconds"
+      ? duration * 1000
+      : unit === "minutes"
+      ? duration * 60 * 1000
+      : unit === "hours"
+      ? duration * 60 * 60 * 1000
+      : duration * 24 * 60 * 60 * 1000;
 
     try {
       setLoading(true);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/rooms/create`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/rooms/create`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ghostMode,
+            expireDuration: ghostMode ? durationMs : null,
+          }),
+        }
+      );
 
       const data = await res.json();
-
       setRoomData(data);
 
-      // auto join after creation
       onJoin({
         roomId: data.roomId,
         password: data.password,
@@ -27,34 +57,41 @@ export default function CreateRoomForm({ onJoin }: any) {
       });
     } catch (err) {
       console.error(err);
+      toast.error("Failed to create room");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 space-y-3">
       <input
         placeholder="Username"
-        className="w-full text-base mb-2 p-2 bg-black border focus:outline-none focus:ring-0 focus:border-green-400"
+        className="w-full text-base p-2 bg-black border"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
 
+      {/* 🔲 Toggle */}
+      <GhostToggle value={ghostMode} onChange={setGhostMode} />
+
+      {/* ⏱ Timer */}
+      {ghostMode && (
+        <TimeSelector
+          value={duration}
+          unit={unit}
+          onChange={setDuration}
+          onUnitChange={setUnit}
+        />
+      )}
+
       <button
-        className="w-full font-orbitron p-2 border border-green-400 text-green-400 hover:bg-green-500 hover:text-black"
         onClick={handleCreate}
         disabled={loading}
+        className="w-full font-orbitron p-2 border border-green-400 text-green-400 hover:bg-green-500 hover:text-black"
       >
         {loading ? "Creating..." : "Create Room"}
       </button>
-
-      {roomData && (
-        <div className="mt-3 text-sm">
-          <p>Room ID: {roomData.roomId}</p>
-          <p>Password: {roomData.password}</p>
-        </div>
-      )}
     </div>
   );
 }

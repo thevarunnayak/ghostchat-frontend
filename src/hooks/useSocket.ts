@@ -10,7 +10,7 @@ export function useSocket({ roomId, password, username }: any) {
   const [connected, setConnected] = useState(false);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
-  const [pending, setPending] = useState<any[]>([]); // 🔥 queue for early messages
+  const [pending, setPending] = useState<any[]>([]);
 
   /* 🔐 Generate key */
   useEffect(() => {
@@ -23,7 +23,6 @@ export function useSocket({ roomId, password, username }: any) {
     wsRef.current = ws;
 
     ws.onopen = () => {
-      console.log("✅ WS CONNECTED");
       setConnected(true);
 
       ws.send(
@@ -32,14 +31,14 @@ export function useSocket({ roomId, password, username }: any) {
           roomId,
           password,
           username,
-        })
+        }),
       );
     };
 
     ws.onmessage = async (event) => {
       const data = JSON.parse(event.data);
 
-      /* 🧠 If key not ready → queue message */
+      /* 🧠 Queue if key not ready */
       if (!cryptoKey && (data.type === "message" || data.type === "history")) {
         setPending((prev) => [...prev, data]);
         return;
@@ -54,8 +53,9 @@ export function useSocket({ roomId, password, username }: any) {
             return {
               ...msg,
               message: await decryptMessage(msg.message, cryptoKey!),
+              expiresAt: msg.expiresAt || null, // 💣
             };
-          })
+          }),
         );
 
         setMessages(decryptedMessages);
@@ -67,7 +67,11 @@ export function useSocket({ roomId, password, username }: any) {
 
         setMessages((prev) => [
           ...prev,
-          { ...data, message: decrypted },
+          {
+            ...data,
+            message: decrypted,
+            expiresAt: data.expiresAt || null, // 💣
+          },
         ]);
       }
 
@@ -94,24 +98,21 @@ export function useSocket({ roomId, password, username }: any) {
         });
 
         setTimeout(() => {
-          setTypingUsers((prev) =>
-            prev.filter((u) => u !== data.username)
-          );
+          setTypingUsers((prev) => prev.filter((u) => u !== data.username));
         }, 2000);
       }
     };
 
     ws.onclose = () => {
-      console.log("❌ WS DISCONNECTED");
       setConnected(false);
     };
 
     return () => {
       ws.close();
     };
-  }, [roomId, password, username]); // ✅ no cryptoKey here
+  }, [roomId, password, username]);
 
-  /* 🔁 Process pending messages when key is ready */
+  /* 🔁 Process pending messages */
   useEffect(() => {
     if (!cryptoKey || pending.length === 0) return;
 
@@ -124,8 +125,9 @@ export function useSocket({ roomId, password, username }: any) {
             return {
               ...msg,
               message: await decryptMessage(msg.message, cryptoKey),
+              expiresAt: msg.expiresAt || null,
             };
-          })
+          }),
         );
 
         setMessages(decryptedMessages);
@@ -136,7 +138,11 @@ export function useSocket({ roomId, password, username }: any) {
 
         setMessages((prev) => [
           ...prev,
-          { ...data, message: decrypted },
+          {
+            ...data,
+            message: decrypted,
+            expiresAt: data.expiresAt || null,
+          },
         ]);
       }
     });
@@ -144,29 +150,55 @@ export function useSocket({ roomId, password, username }: any) {
     setPending([]);
   }, [cryptoKey, pending]);
 
+  /* 💣 AUTO VANISH */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now();
+
+      setMessages((prev) =>
+        prev.map((msg) => {
+          if (!msg.expiresAt) return msg;
+
+          const isExpired = new Date(msg.expiresAt).getTime() <= now;
+
+          // mark as dying instead of removing instantly
+          if (isExpired && !msg.isDying) {
+            return { ...msg, isDying: true };
+          }
+
+          return msg;
+        }),
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMessages((prev) => prev.filter((msg) => !msg.isDying));
+    }, 800); // match animation duration
+
+    return () => clearTimeout(timeout);
+  }, [messages]);
+
   /* 📤 SEND MESSAGE */
   const sendMessage = async (message: string) => {
-    console.log("SEND CLICKED");
-
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-      console.log("❌ WS not ready");
       return;
     }
 
     if (!cryptoKey) {
-      console.log("❌ cryptoKey not ready");
       return;
     }
 
     const encrypted = await encryptMessage(message, cryptoKey);
 
-    console.log("✅ sending", encrypted);
-
     wsRef.current.send(
       JSON.stringify({
         type: "message",
         message: encrypted,
-      })
+      }),
     );
   };
 
@@ -177,7 +209,7 @@ export function useSocket({ roomId, password, username }: any) {
     wsRef.current.send(
       JSON.stringify({
         type: "typing",
-      })
+      }),
     );
   };
 
