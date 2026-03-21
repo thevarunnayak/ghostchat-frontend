@@ -38,7 +38,7 @@ export default function Sidebar({
         </div>
 
         <div className="p-4 border-t border-green-500/30 text-sm space-y-3">
-          <Info label="Room ID" value={roomId} />
+          <Info label="Room ID" value={roomId} copyValue={roomId} />
           <Info label="Password" value={"*".repeat(password.length)} copyValue={password} />
 
           <div>
