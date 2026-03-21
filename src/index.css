@@ -6,7 +6,73 @@
   --bg: #000000;
   --text: #00ff9f;
   --border: #00ff9f;
-  --muted: #0f172a;
+  --muted: rgba(0, 255, 159, 0.2);
+  --glow: 0 0 8px #00ff9f;
+  --text-secondary: #00ff9f;
+  --bg-secondary: #0f1a12;
+  --bg-toggle-off: #02150c;
+  --bg-dark: rgba(0, 255, 159, 0.05);
+  --bg-hover: #00ff9f;
+  --text-on-hover: #000000;
+  --border-muted: rgba(0, 255, 159, 0.2);
+  --bg-active: #00ff9f;
+  --text-active: #000000;
+}
+
+.theme-blue {
+  --text: #00eaff;
+  --border: #00eaff;
+  --muted: rgba(0, 234, 255, 0.2);
+  --glow: 0 0 8px #00eaff;
+  --text-secondary: #00eaff;
+  --bg-secondary: #0a1a1f;
+  --bg-toggle-off: #0a1a1f;
+  --bg-dark: rgba(0, 234, 255, 0.05);
+  --bg-hover: #00eaff;
+  --border-muted: rgba(0, 234, 255, 0.2);
+  --bg-active: #00eaff;
+}
+
+.theme-purple {
+  --text: #b026ff;
+  --border: #b026ff;
+  --muted: rgba(176, 38, 255, 0.2);
+  --glow: 0 0 8px #b026ff;
+  --text-secondary: #b026ff;
+  --bg-secondary: #1a0a1f;
+  --bg-toggle-off: #1a0a1f;
+  --bg-dark: rgba(176, 38, 255, 0.05);
+  --bg-hover: #b026ff;
+  --border-muted: rgba(176, 38, 255, 0.2);
+  --bg-active: #b026ff;
+}
+
+.theme-red {
+  --text: #ff3b3b;
+  --border: #ff3b3b;
+  --muted: rgba(255, 59, 59, 0.2);
+  --glow: 0 0 8px #ff3b3b;
+  --text-secondary: #ff3b3b;
+  --bg-secondary: #1f0a0a;
+  --bg-toggle-off: #1f0a0a;
+  --bg-dark: rgba(255, 59, 59, 0.05);
+  --bg-hover: #ff3b3b;
+  --border-muted: rgba(255, 59, 59, 0.2);
+  --bg-active: #ff3b3b;
+}
+
+.theme-amber {
+  --text: #ffbf00;
+  --border: #ffbf00;
+  --muted: rgba(255, 191, 0, 0.2);
+  --glow: 0 0 8px #ffbf00;
+  --text-secondary: #ffbf00;
+  --bg-secondary: #1f1a0a;
+  --bg-toggle-off: #1f1a0a;
+  --bg-dark: rgba(255, 191, 0, 0.05);
+  --bg-hover: #ffbf00;
+  --border-muted: rgba(255, 191, 0, 0.2);
+  --bg-active: #ffbf00;
 }
 
 .light {
@@ -28,11 +94,11 @@ body {
 
 /* GLOW EFFECT */
 .glow {
-  text-shadow: 0 0 2px #00ff9d50, 0 0 2px #00ff9f50;
+  text-shadow: var(--glow);
 }
 
 .glow-border {
-  box-shadow: 0 0 2px #00ff9f;
+  box-shadow: var(--glow);
 }
 
 /* CRT SCANLINES */
@@ -42,8 +108,8 @@ body {
   inset: 0;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 255, 159, 0.05) 0px,
-    rgba(0, 255, 159, 0.05) 1px,
+    var(--bg-dark) 0px,
+    var(--bg-dark) 1px,
     transparent 1px,
     transparent 3px
   );

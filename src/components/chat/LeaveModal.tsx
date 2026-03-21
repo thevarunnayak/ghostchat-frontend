@@ -1,7 +1,7 @@
 export default function LeaveModal({ onConfirm, onCancel }: any) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="bg-black border border-green-500/30 p-6 w-[90%] max-w-sm text-center">
+      <div className="bg-black border border-(--border)/30 p-6 w-[90%] max-w-sm text-center">
         <h2 className="text-lg glow mb-3">Leave Room?</h2>
 
         <p className="text-sm opacity-70 mb-5">
@@ -10,7 +10,7 @@ export default function LeaveModal({ onConfirm, onCancel }: any) {
 
         <div className="flex justify-center gap-3">
           <button
-            className="px-4 py-1 border border-green-500/30"
+            className="px-4 py-1 border border-(--border)/30"
             onClick={onCancel}
           >
             Cancel

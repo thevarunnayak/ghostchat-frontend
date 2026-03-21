@@ -17,10 +17,10 @@ export default function TimeSelector({
   return (
     <div className="flex gap-2 w-full">
       {/* NUMBER INPUT */}
-      <div className="flex items-center border border-green-500/30 flex-1">
+      <div className="flex items-center border border-(--border)/30 flex-1">
         <button
           onClick={decrease}
-          className="px-3 py-2 border-r border-green-500/30 hover:bg-green-500 hover:text-black"
+          className="px-3 py-2 border-r border-(--border)/30 hover:bg-(--bg-hover) hover:text-(--text-on-hover)"
         >
           -
         </button>
@@ -34,7 +34,7 @@ export default function TimeSelector({
 
         <button
           onClick={increase}
-          className="px-3 py-2 border-l border-green-500/30 hover:bg-green-500 hover:text-black"
+          className="px-3 py-2 border-l border-(--border)/30 hover:bg-(--bg-hover) hover:text-(--text-on-hover)"
         >
           +
         </button>

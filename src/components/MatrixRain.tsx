@@ -21,7 +21,7 @@ export default function MatrixRain() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#00ff9f";
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim();
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {

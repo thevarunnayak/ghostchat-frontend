@@ -51,8 +51,8 @@ export default function CreateRoomForm({ onJoin }: any) {
       setRoomData(data);
 
       onJoin({
-        roomId: data.roomId,
-        password: data.password,
+        roomId: roomData.roomId || data.roomId,
+        password: roomData.password || data.password,
         username,
       });
     } catch (err) {
@@ -75,7 +75,7 @@ export default function CreateRoomForm({ onJoin }: any) {
       {/* 🔲 Toggle */}
       <GhostToggle value={ghostMode} onChange={setGhostMode} />
 
-        <p className="opacity-60 mt-1 text-green-600 text-[12px]">
+        <p className="opacity-90 mt-1 text-(--text)/60 text-[12px]">
           Messages self-destruct after a short time and leave no trace. No history. No footprints.
         </p>
 
@@ -92,7 +92,7 @@ export default function CreateRoomForm({ onJoin }: any) {
       <button
         onClick={handleCreate}
         disabled={loading}
-        className="w-full font-orbitron p-2 border border-green-400 text-green-400 hover:bg-green-500 hover:text-black"
+        className="w-full font-orbitron p-2 border border-(--border) text-(--text) hover:bg-(--bg-hover) hover:text-(--text-on-hover)"
       >
         {loading ? "Creating..." : "Create Room"}
       </button>

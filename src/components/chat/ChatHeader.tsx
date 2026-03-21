@@ -2,9 +2,9 @@ import { Menu } from "lucide-react";
 
 export default function ChatHeader({ toggleSidebar }: any) {
   return (
-    <div className="p-3 border-b border-green-500/30 flex flex-col items-center relative">
+    <div className="p-3 border-b border-(--border)/30 flex flex-col items-center relative">
       <button
-        className="p-2 border border-green-500/30 md:hidden absolute left-2 top-1/2 -translate-y-1/2"
+        className="p-2 border border-(--border)/30 md:hidden absolute left-2 top-1/2 -translate-y-1/2"
         onClick={toggleSidebar}
       >
         <Menu size={18} />

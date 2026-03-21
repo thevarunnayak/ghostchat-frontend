@@ -33,7 +33,7 @@ export default function MessageItem({ msg, prev, next, username }: any) {
   return (
     <div className={showName ? "mt-4" : "mt-1"}>
       {showName && !isMe && (
-        <div className="text-xs opacity-70 text-green-400 ml-1 mb-2">
+        <div className="text-xs opacity-70 text-(--text) ml-1 mb-2">
           {msg.username}
         </div>
       )}
@@ -44,8 +44,8 @@ export default function MessageItem({ msg, prev, next, username }: any) {
             <div
               className={`px-3 py-2 text-sm rounded-lg ${
                 isMe
-                  ? "bg-green-500 text-black"
-                  : "bg-[#0f1a12] text-green-300 border border-green-500/20"
+                  ? "bg-(--bg-active) text-(--text-on-hover)"
+                  : "bg-(--bg-secondary) text-(--text-secondary) border border-(--border)/20"
               }`}
             >
               <div>{msg.message}</div>

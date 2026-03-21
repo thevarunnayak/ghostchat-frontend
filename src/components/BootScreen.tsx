@@ -84,10 +84,10 @@ export default function BootScreen({ onDone }: any) {
   }, [doneTyping, onDone, variant]);
 
   return (
-    <div className="fixed inset-0 bg-black text-green-400 z-50 font-mono crt">
+    <div className="fixed inset-0 bg-black text-(--text) z-50 font-mono crt">
       {/* TERMINAL AREA (TOP LEFT, FULLSCREEN) */}
       <div className="p-4 sm:p-6 md:p-8 text-xs sm:text-sm md:text-base leading-relaxed">
-        <div className="mb-2 text-green-500">
+        <div className="mb-2 text-(--text-secondary)">
           {variant === "chat" ? "node@void:~#" : "root@matrix:~#"}
         </div>
 
@@ -105,9 +105,9 @@ export default function BootScreen({ onDone }: any) {
         {/* LOADING BAR (BOTTOM FULL WIDTH) */}
         {doneTyping && (
           <div className="mt-4">
-            <div className="h-2 w-full border border-green-500">
+            <div className="h-2 w-full border border-(--border)">
               <div
-                className="h-full bg-green-400 shadow-[0_0_10px_#00ff9f] transition-all"
+                className="h-full bg-(--bg-active) shadow-(--glow) transition-all"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -122,7 +122,7 @@ export default function BootScreen({ onDone }: any) {
       {/* SKIP BUTTON (FIXED TO SCREEN) */}
       <button
         onClick={onDone}
-        className="fixed font-orbitron bottom-4 right-4 text-xs border px-2 py-1 opacity-60 hover:opacity-100 hover:bg-green-500 hover:text-black"
+        className="fixed font-orbitron bottom-4 right-4 text-xs border px-2 py-1 opacity-60 hover:opacity-100 hover:bg-(--bg-hover) hover:text-(--text-on-hover)"
       >
         Skip ▶
       </button>

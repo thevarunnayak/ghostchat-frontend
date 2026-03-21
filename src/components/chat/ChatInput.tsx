@@ -15,9 +15,9 @@ export default function ChatInput({
         </div>
       )}
 
-      <div className="p-3 border-t border-green-500/30 flex gap-2">
+      <div className="p-3 border-t border-(--border)/30 flex gap-2">
         <input
-          className="flex-1 p-2 bg-black border border-green-500/30"
+          className="flex-1 p-2 bg-black border border-(--border)/30"
           value={input}
           onChange={(e) => {
             setInput(e.target.value);
@@ -41,7 +41,7 @@ export default function ChatInput({
         <button
           disabled={disabled}
           onClick={onSend}
-          className="px-4 border hover:bg-green-500 hover:text-black disabled:opacity-40"
+          className="px-4 border hover:bg-(--bg-hover) hover:text-(--text-on-hover) disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Send
         </button>
