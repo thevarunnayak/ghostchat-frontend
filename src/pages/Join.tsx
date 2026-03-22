@@ -41,7 +41,7 @@ export default function Join() {
       </h1>
 
       {/* FORM CARD */}
-      <div className="p-6 border glow-border rounded-lg w-full max-w-md bg-black/70">
+      <div className="p-6 border glow-border rounded-sm w-full max-w-md bg-black/70">
 
         {/* JOIN FORM */}
         <JoinForm onJoin={handleJoin} />

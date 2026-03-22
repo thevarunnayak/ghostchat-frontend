@@ -13,6 +13,12 @@ export default function App() {
     const theme = getTheme();
     applyTheme(theme);
   }, []);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/health`, {
+      cache: "no-store",
+    }).catch(() => { });
+  }, []);
   return (
     <>
       {!bootDone && <BootScreen onDone={() => setBootDone(true)} />}

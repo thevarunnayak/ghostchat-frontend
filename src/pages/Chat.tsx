@@ -21,7 +21,7 @@ export default function Chat() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
 
   // save session

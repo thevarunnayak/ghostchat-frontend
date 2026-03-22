@@ -2,11 +2,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 import GhostToggle from "./GhostToggle";
 import TimeSelector from "./TimeSelector";
+import MatrixLoader from "./MatrixLoader";
 
 export default function CreateRoomForm({ onJoin }: any) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [roomData, setRoomData] = useState<any>(null);
 
   const [ghostMode, setGhostMode] = useState(false);
   const [duration, setDuration] = useState(1);
@@ -23,14 +23,14 @@ export default function CreateRoomForm({ onJoin }: any) {
       return;
     }
 
-  const durationMs =
-    unit === "seconds"
-      ? duration * 1000
-      : unit === "minutes"
-      ? duration * 60 * 1000
-      : unit === "hours"
-      ? duration * 60 * 60 * 1000
-      : duration * 24 * 60 * 60 * 1000;
+    const durationMs =
+      unit === "seconds"
+        ? duration * 1000
+        : unit === "minutes"
+          ? duration * 60 * 1000
+          : unit === "hours"
+            ? duration * 60 * 60 * 1000
+            : duration * 24 * 60 * 60 * 1000;
 
     try {
       setLoading(true);
@@ -48,11 +48,15 @@ export default function CreateRoomForm({ onJoin }: any) {
       );
 
       const data = await res.json();
-      setRoomData(data);
+
+      // ✅ validate response
+      if (!res.ok || !data.roomId || !data.password) {
+        throw new Error("Invalid response");
+      }
 
       onJoin({
-        roomId: roomData.roomId || data.roomId,
-        password: roomData.password || data.password,
+        roomId: data.roomId,
+        password: data.password,
         username,
       });
     } catch (err) {
@@ -65,6 +69,10 @@ export default function CreateRoomForm({ onJoin }: any) {
 
   return (
     <div className="mt-4 space-y-3">
+      {/* 🔥 LOADER OVERLAY */}
+      {loading && (
+        <MatrixLoader message={"Establishing secure channel..."} />
+      )}
       <input
         placeholder="Username"
         className="w-full text-base p-2 bg-black border"
@@ -75,9 +83,9 @@ export default function CreateRoomForm({ onJoin }: any) {
       {/* 🔲 Toggle */}
       <GhostToggle value={ghostMode} onChange={setGhostMode} />
 
-        <p className="opacity-90 mt-1 text-(--text)/60 text-[12px]">
-          Messages self-destruct after a short time and leave no trace. No history. No footprints.
-        </p>
+      <p className="opacity-90 mt-1 text-(--text)/60 text-[12px]">
+        Messages self-destruct after a short time and leave no trace. No history. No footprints.
+      </p>
 
       {/* ⏱ Timer */}
       {ghostMode && (

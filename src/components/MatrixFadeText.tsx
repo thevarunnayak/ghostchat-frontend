@@ -33,7 +33,7 @@ export default function MatrixFadeText({ children, isDying }: any) {
       ctx.fillStyle = "rgba(0,0,0,0.2)";
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = "#00ff9f";
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim();;
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < columns; i++) {
