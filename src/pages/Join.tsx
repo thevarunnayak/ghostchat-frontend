@@ -33,7 +33,7 @@ export default function Join() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 pt-20 md:pt-28 lg:pt-32 relative">
+    <div className="min-h-screen flex flex-col items-center px-4 pt-20 md:pt-28 lg:pt-32 pb-12 relative">
 
       {/* 🔥 TITLE OUTSIDE */}
       <h1 className="text-3xl md:text-4xl mb-8 glow text-center font-semibold font-orbitron">
